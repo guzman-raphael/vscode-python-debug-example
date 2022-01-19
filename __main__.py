@@ -10,10 +10,18 @@
 
 # === 2022-01-19 1PM ===
 
-import toolbox
+# import toolbox
 
-msg = toolbox.msg_formatter('now')
+# msg = toolbox.msg_formatter('now')
 
-msg_final = f'{msg}!'
+# msg_final = f'{msg}!'
 
-print(msg_final)
+# print(msg_final)
+
+# === 2022-01-19 2PM ===
+
+from tests import test_utils
+
+test_utils.test_msg_formatter()
+
+print('finished')
