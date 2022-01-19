@@ -1,3 +1,4 @@
+# normally you would separate test requirements into a dedicated file
 /main
 pytest
 pytest-cov

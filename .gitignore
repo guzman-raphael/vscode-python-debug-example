@@ -1,1 +1,5 @@
 __pycache__
+
+## normally you would also add the following
+# .vscode
+# __main__.py
