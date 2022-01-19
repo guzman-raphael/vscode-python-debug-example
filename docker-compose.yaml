@@ -1,0 +1,16 @@
+# HOST_UID=1000 docker-compose up --build
+version: '2.4'
+services:
+  app:
+    image: datajoint/miniconda3:4.10.3-py3.9-debian
+    user: ${HOST_UID}:anaconda
+    working_dir: /tmp
+    volumes:
+      - ./toolbox:/main/toolbox
+      - ./setup.py:/main/setup.py
+    command:
+      - bash
+      - -c
+      - |
+        pip install /main
+        tail -f /dev/null
