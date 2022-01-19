@@ -2,19 +2,18 @@
 version: '2.4'
 services:
   app:
-    image: datajoint/miniconda3:4.10.3-py3.9-debian
+    build: .
+    image: datajoint/toolbox:0.0.0
     user: ${HOST_UID}:anaconda
     working_dir: /tmp
     volumes:
-      - ./toolbox:/main/toolbox
+      - ./toolbox:/opt/conda/lib/python3.9/site-packages/toolbox
       - ./tests:/main/tests
-      - ./setup.py:/main/setup.py
     command:
       - bash
       - -c
       - |
         set -e
-        pip install /main pytest pytest-cov flake8
         echo "------ SYNTAX TESTS ------"
         flake8 /main --count --select=E9,F63,F7,F82 --show-source --statistics
         echo "------ UNIT TESTS ------"
