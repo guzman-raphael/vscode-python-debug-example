@@ -7,10 +7,19 @@ services:
     working_dir: /tmp
     volumes:
       - ./toolbox:/main/toolbox
+      - ./tests:/main/tests
       - ./setup.py:/main/setup.py
     command:
       - bash
       - -c
       - |
-        pip install /main
-        tail -f /dev/null
+        set -e
+        pip install /main pytest pytest-cov flake8
+        echo "------ SYNTAX TESTS ------"
+        flake8 /main --count --select=E9,F63,F7,F82 --show-source --statistics
+        echo "------ UNIT TESTS ------"
+        pytest -p no:cacheprovider -sv --cov-report term-missing --cov=toolbox /main/tests
+        echo "------ STYLE TESTS ------"
+        flake8 /main --count --max-complexity=20 --max-line-length=95 --statistics
+
+        #tail -f /dev/null
