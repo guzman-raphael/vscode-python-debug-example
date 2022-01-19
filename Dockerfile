@@ -4,4 +4,4 @@ COPY --chown=anaconda:anaconda ./toolbox /main/toolbox
 COPY --chown=anaconda:anaconda ./pip_requirements.txt /tmp/
 RUN \
     /entrypoint.sh echo "STATUS: Installed dependencies." && \
-    rm -R /main/toolbox /main/setup.py
+    rm -R /main/toolbox /main/setup.py /tmp/pip_requirements.txt

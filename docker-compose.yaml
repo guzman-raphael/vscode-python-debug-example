@@ -5,20 +5,26 @@ services:
     build: .
     image: datajoint/toolbox:0.0.0
     user: ${HOST_UID}:anaconda
-    working_dir: /tmp
     volumes:
-      - ./toolbox:/opt/conda/lib/python3.9/site-packages/toolbox
-      - ./tests:/main/tests
+      - .:/main
+    #   - ./toolbox:/opt/conda/lib/python3.9/site-packages/toolbox
+    #   - ./tests:/main/tests
+    # working_dir: /tmp
+    ports:
+      - "5678:5678"
     command:
       - bash
       - -c
       - |
         set -e
-        echo "------ SYNTAX TESTS ------"
-        flake8 /main --count --select=E9,F63,F7,F82 --show-source --statistics
-        echo "------ UNIT TESTS ------"
-        pytest -p no:cacheprovider -sv --cov-report term-missing --cov=toolbox /main/tests
-        echo "------ STYLE TESTS ------"
-        flake8 /main --count --max-complexity=20 --max-line-length=95 --statistics
+        # echo "------ SYNTAX TESTS ------"
+        # flake8 /main --count --select=E9,F63,F7,F82 --show-source --statistics
+        # echo "------ UNIT TESTS ------"
+        # pytest -p no:cacheprovider -sv --cov-report term-missing --cov=toolbox /main/tests
+        # echo "------ STYLE TESTS ------"
+        # flake8 /main --count --max-complexity=20 --max-line-length=95 --statistics
 
-        #tail -f /dev/null
+        while true; do
+          python -m ptvsd --host 0.0.0.0 --port 5678 --wait .
+          sleep 2
+        done
